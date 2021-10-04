@@ -2,6 +2,7 @@ package tests;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.testng.annotations.Test;
+import pojos.UserBody;
 
 import java.io.File;
 
@@ -36,5 +37,18 @@ public class RestTests {
                 .then().statusCode(201);
     }
 
+    @Test
+    public void postOwnUser() {
+        UserBody userBody = new UserBody();
+        userBody.setEmail("eve.holt@reqres.in");
+        userBody.setPassword("pistol");
+
+        given()
+                .baseUri("https://reqres.in/api")
+                .contentType(ContentType.JSON)
+                .body(userBody)
+                .when().post("/api/users")
+                .then().statusCode(201);
+    }
 
 }
